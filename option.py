@@ -136,7 +136,8 @@ parser.add_argument('--epsilon', type=float, default=1e-8,
                     help='ADAM epsilon for numerical stability')
 parser.add_argument('--weight_decay', type=float, default=0,
                     help='weight decay')
-parser.add_argument('--start_epoch', type=int, default=0,
+#模型权重
+parser.add_argument('--start_epoch', type=int, default=132,
                     help='resume from the snapshot, and the start_epoch')
 
 # Loss specifications
@@ -154,7 +155,8 @@ parser.add_argument('--experiment_name', type=str, default='cdformer_baseline_x4
                          'if empty, use auto-generated naming')
 parser.add_argument('--load', type=str, default='.',
                     help='file name to load')
-parser.add_argument('--resume', type=int, default=0,
+#模型权重
+parser.add_argument('--resume', type=int, default=132,
                     help='resume from specific checkpoint')
 parser.add_argument('--save_models', action='store_true',
                     help='save all intermediate models')
