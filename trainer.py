@@ -265,12 +265,12 @@ class Trainer():
                     # save results
                     if self.args.save_results:
                         save_list = [sr]
-                        filename = filename[0]
+                        filename = f'epoch{epoch}_{filename[0]}'
                         self.ckp.save_results(filename, save_list, scale)
                 self.ckp.log[-1, idx_scale] = eval_psnr / len(self.loader_test)
                 self.ckp.write_log(
                     '[Epoch {}---{} x{}]\tPSNR: {:.3f} SSIM: {:.4f}'.format(
-                        self.args.resume,
+                        epoch,
                         self.args.data_test,
                         scale,
                         eval_psnr / len(self.loader_test),
