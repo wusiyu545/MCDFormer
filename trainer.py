@@ -193,7 +193,10 @@ class Trainer():
                     )
 
         # save model
-        if epoch >= 0:
+        save_every = max(1, int(self.args.save_every))
+        is_last_epoch = epoch == (self.args.epochs_encoder + self.args.epochs_sr)
+        should_save = (epoch % save_every == 0) or is_last_epoch
+        if should_save:
             target = self.model.get_model()
             model_dict = target.state_dict()
             keys = list(model_dict.keys())

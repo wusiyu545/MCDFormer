@@ -1,4 +1,5 @@
 import os
+import glob
 from importlib import import_module
 
 import torch
@@ -96,8 +97,25 @@ class Model(nn.Module):
                 )
 
         elif resume > 0:
+            ckpt_path = os.path.join(apath, 'model', 'model_{}.pt'.format(resume))
+            if not os.path.isfile(ckpt_path):
+                candidates = glob.glob(os.path.join(apath, 'model', 'model_*.pt'))
+                candidates = sorted(
+                    candidates,
+                    key=lambda p: int(os.path.splitext(os.path.basename(p))[0].split('_')[-1])
+                )
+                if len(candidates) > 0:
+                    ckpt_path = candidates[-1]
+                    print('Warning: {} not found, fallback to latest checkpoint {}.'.format(
+                        os.path.basename(os.path.join(apath, 'model', 'model_{}.pt'.format(resume))),
+                        os.path.basename(ckpt_path)
+                    ))
+                else:
+                    print('Warning: checkpoint {} not found and no fallback checkpoints exist. '
+                          'Training will start from current model initialization.'.format(ckpt_path))
+                    return
             self.get_model().load_state_dict(
-                torch.load(os.path.join(apath, 'model', 'model_{}.pt'.format(resume)), **kwargs,map_location='cuda:0'),
+                torch.load(ckpt_path, **kwargs),
                 strict=False
             )
 

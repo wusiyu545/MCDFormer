@@ -62,14 +62,17 @@ class checkpoint():
         self.log = torch.Tensor()
         now = datetime.datetime.now().strftime('%Y-%m-%d-%H:%M:%S')
 
-        if args.blur_type == "iso_gaussian":
-            # print('is iso_gaussian')
-            self.dir = './experiment/' + args.save + '_x' + str(int(args.scale[0])) + '_' + args.mode + '_iso'
-        elif args.blur_type == 'aniso_gaussian':
-            # print('3333')
-            self.dir = './experiment/' + args.save + '_x' + str(int(args.scale[0])) + '_' + args.mode + '_aniso'
+        if args.experiment_name:
+            self.dir = os.path.join(args.dir_experiment, args.experiment_name)
         else:
-            print('nothing')
+            if args.blur_type == "iso_gaussian":
+                run_name = args.save + '_x' + str(int(args.scale[0])) + '_' + args.mode + '_iso'
+                self.dir = os.path.join(args.dir_experiment, run_name)
+            elif args.blur_type == 'aniso_gaussian':
+                run_name = args.save + '_x' + str(int(args.scale[0])) + '_' + args.mode + '_aniso'
+                self.dir = os.path.join(args.dir_experiment, run_name)
+            else:
+                print('nothing')
 
         def _make_dir(path):
             if not os.path.exists(path): os.makedirs(path)

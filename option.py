@@ -21,6 +21,8 @@ parser.add_argument('--seed', type=int, default=1,
 # Data specifications
 parser.add_argument('--dir_data', type=str, default='data',
                     help='dataset directory')
+parser.add_argument('--dir_experiment', type=str, default='./experiment',
+                    help='experiment directory for logs/checkpoints/results')
 parser.add_argument('--dir_demo', type=str, default='test',
                     help='demo image directory')
 parser.add_argument('--data_train', type=str, default='DF2K',
@@ -93,9 +95,9 @@ parser.add_argument('--reset', action='store_true',
                     help='reset the training')
 parser.add_argument('--test_every', type=int, default=1000,
                     help='do test per every N 4es')
-parser.add_argument('--epochs_encoder', type=int, default=600,
+parser.add_argument('--epochs_encoder', type=int, default=300,
                     help='number of epochs to train the degradation encoder')
-parser.add_argument('--epochs_sr', type=int, default=600,
+parser.add_argument('--epochs_sr', type=int, default=300,
                     help='number of epochs to train the whole network')
 parser.add_argument('--batch_size', type=int, default=4,
                     help='input batch size for training')
@@ -134,7 +136,7 @@ parser.add_argument('--epsilon', type=float, default=1e-8,
                     help='ADAM epsilon for numerical stability')
 parser.add_argument('--weight_decay', type=float, default=0,
                     help='weight decay')
-parser.add_argument('--start_epoch', type=int, default=1200,
+parser.add_argument('--start_epoch', type=int, default=0,
                     help='resume from the snapshot, and the start_epoch')
 
 # Loss specifications
@@ -146,9 +148,13 @@ parser.add_argument('--skip_threshold', type=float, default='1e6',
 # Log specifications
 parser.add_argument('--save', type=str, default='cdformer',
                     help='file name to save')
+#模型名字
+parser.add_argument('--experiment_name', type=str, default='cdformer_baseline_x4_x4_bicubic_iso',
+                    help='custom experiment folder name under dir_experiment; '
+                         'if empty, use auto-generated naming')
 parser.add_argument('--load', type=str, default='.',
                     help='file name to load')
-parser.add_argument('--resume', type=int, default=1200,
+parser.add_argument('--resume', type=int, default=0,
                     help='resume from specific checkpoint')
 parser.add_argument('--save_models', action='store_true',
                     help='save all intermediate models')
@@ -158,7 +164,8 @@ parser.add_argument('--save_results', default=True,
                     help='save output results')
 parser.add_argument('--save_epochs', default=False,
                     help='save output results')
-
+parser.add_argument('--save_every', type=int, default=20,
+                    help='save checkpoint every N epochs during training')
 parser.add_argument('--G_lossfn_weight', default=1.0,
                     help='G_lossfn_weight')
 parser.add_argument('--G_lossfn_type', default="l1",
