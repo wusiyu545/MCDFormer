@@ -93,8 +93,10 @@ parser.add_argument('--precision', type=str, default='single',
 # Training specifications
 parser.add_argument('--reset', action='store_true',
                     help='reset the training')
-parser.add_argument('--test_every', type=int, default=20,
-                    help='do test every N epochs')
+parser.add_argument('--test_every', type=int, default=1000,
+                    help='original dataloader repeat control')
+parser.add_argument('--eval_every', type=int, default=20,
+                    help='do evaluation every N epochs')
 parser.add_argument('--epochs_encoder', type=int, default=300,
                     help='number of epochs to train the degradation encoder')
 parser.add_argument('--epochs_sr', type=int, default=300,

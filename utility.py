@@ -121,7 +121,7 @@ class checkpoint():
         if len(self.log) == 0:
             return
 
-        axis = np.arange(1, len(self.log) + 1) * self.args.test_every
+        axis = np.arange(1, len(self.log) + 1) * self.args.eval_every
         axis[-1] = epoch  # 保证最后一个点就是当前测试 epoch
 
         label = 'SR on {}'.format(self.args.data_test)

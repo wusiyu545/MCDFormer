@@ -36,7 +36,7 @@ if __name__ == '__main__':
             epoch = t.train()
 
             # 每隔 N 个 epoch 自动测试一次；最后一个 epoch 也强制测试
-            if (epoch % args.test_every == 0) or (epoch == total_epochs):
+            if (epoch % args.eval_every == 0) or (epoch == total_epochs):
                 t.test(epoch)
                 checkpoint.plot_psnr(epoch)
                 torch.save(checkpoint.log, os.path.join(checkpoint.dir, 'psnr_log.pt'))
