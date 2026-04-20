@@ -95,7 +95,8 @@ parser.add_argument('--reset', action='store_true',
                     help='reset the training')
 parser.add_argument('--test_every', type=int, default=1000,
                     help='original dataloader repeat control')
-parser.add_argument('--eval_every', type=int, default=20,
+#每隔多少个 epoch 跑一次评估
+parser.add_argument('--eval_every', type=int, default=9999999,
                     help='do evaluation every N epochs')
 parser.add_argument('--epochs_encoder', type=int, default=300,
                     help='number of epochs to train the degradation encoder')
@@ -139,7 +140,7 @@ parser.add_argument('--epsilon', type=float, default=1e-8,
 parser.add_argument('--weight_decay', type=float, default=0,
                     help='weight decay')
 #模型权重
-parser.add_argument('--start_epoch', type=int, default=132,
+parser.add_argument('--start_epoch', type=int, default=440,
                     help='resume from the snapshot, and the start_epoch')
 
 # Loss specifications
@@ -158,7 +159,7 @@ parser.add_argument('--experiment_name', type=str, default='cdformer_baseline_x4
 parser.add_argument('--load', type=str, default='.',
                     help='file name to load')
 #模型权重
-parser.add_argument('--resume', type=int, default=132,
+parser.add_argument('--resume', type=int, default=440,
                     help='resume from specific checkpoint')
 parser.add_argument('--save_models', action='store_true',
                     help='save all intermediate models')

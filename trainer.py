@@ -24,13 +24,22 @@ class Trainer():
         self.G_lossfn_weight = args.G_lossfn_weight
         self.device = torch.device('cpu' if args.cpu else 'cuda')
         self.E_decay = args.E_decay
-        # ===== 新增：全局进度条相关 =====
+        # ===== 全局进度条相关 =====
         self.global_step = 0
         self.total_steps = 0
+        self.steps_per_epoch = 0
         self.pbar = None
 
         if (not self.args.test_only) and (self.loader_train is not None):
-            self.total_steps = len(self.loader_train) * (self.args.epochs_encoder + self.args.epochs_sr)
+            self.steps_per_epoch = len(self.loader_train)
+            total_epochs = self.args.epochs_encoder + self.args.epochs_sr
+
+            # 续训时，start_epoch 代表已经完成的 epoch 数
+            completed_epochs = max(0, int(self.args.start_epoch))
+
+            self.total_steps = self.steps_per_epoch * total_epochs
+            self.global_step = min(completed_epochs * self.steps_per_epoch, self.total_steps)
+
             self.pbar = tqdm(
                 total=self.total_steps,
                 initial=self.global_step,

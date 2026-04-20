@@ -21,10 +21,13 @@ parser.add_argument('--seed', type=int, default=1,
 # Data specifications
 parser.add_argument('--dir_data', type=str, default='data',
                     help='dataset directory')
+parser.add_argument('--dir_experiment', type=str, default='./experiment',
+                    help='experiment directory for logs/checkpoints/results')
 parser.add_argument('--dir_demo', type=str, default='test',
                     help='demo image directory')
 parser.add_argument('--data_train', type=str, default='DF2K',
                     help='train dataset name')
+#数据集名字
 parser.add_argument('--data_test', type=str, default='Set5',
                     help='test dataset name')
 parser.add_argument('--data_range', type=str, default='1-3450/801-810',
@@ -58,7 +61,8 @@ parser.add_argument('--sig_min', type=float, default=0.2,
                     help='minimum sigma of isotropic Gaussian blurs')
 parser.add_argument('--sig_max', type=float, default=4.0,
                     help='maximum sigma of isotropic Gaussian blurs')
-parser.add_argument('--sig', type=float, default=0,
+#某个kernel width
+parser.add_argument('--sig', type=float, default=1.2,
                     help='specific sigma of isotropic Gaussian blurs')
 ## anisotropic Gaussian blur
 parser.add_argument('--lambda_min', type=float, default=0.2,
@@ -146,9 +150,13 @@ parser.add_argument('--skip_threshold', type=float, default='1e6',
 # Log specifications
 parser.add_argument('--save', type=str, default='cdformer',
                     help='file name to save')
+#模型名字
+parser.add_argument('--experiment_name', type=str, default='cdformer_baseline_x4_x4_bicubic_iso',
+                    help='custom experiment folder name under dir_experiment; '
+                         'if empty, use auto-generated naming')
 parser.add_argument('--load', type=str, default='.',
                     help='file name to load')
-parser.add_argument('--resume', type=int, default=1200,
+parser.add_argument('--resume', type=int, default=600,
                     help='resume from specific checkpoint')
 parser.add_argument('--save_models', action='store_true',
                     help='save all intermediate models')
